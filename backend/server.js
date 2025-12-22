@@ -1,48 +1,77 @@
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
+
+// Routes
 import foodRouter from "./routes/foodRoute.js";
 import userRouter from "./routes/userRoute.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
-import "dotenv/config.js";
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 10000;
+const PORT = process.env.PORT || 10000;
 
-// middleware
+// =======================
+// Middleware
+// =======================
 app.use(express.json());
-app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://food-app-piss.onrender.com"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
 
+// ✅ Correct CORS for Frontend + Admin + Local
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://joyfulfoodapp.netlify.app",   // frontend
+  "https://joyfuladmin.netlify.app"      // admin
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS not allowed"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
+// =======================
+// Routes
+// =======================
+app.use("/api/food", foodRouter);
+app.use("/api/user", userRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/order", orderRouter);
+
+// Static images
+app.use("/images", express.static("uploads"));
+
+// Health check
+app.get("/", (req, res) => {
+  res.send("API Working 🚀");
+});
+
+// =======================
+// Start Server AFTER DB
+// =======================
 const startServer = async () => {
   try {
-    await connectDB();
-
-    app.use("/api/food", foodRouter);
-    app.use("/api/user", userRouter);
-    app.use("/api/cart", cartRouter);
-    app.use("/api/order", orderRouter);
-    app.use("/images", express.static("uploads"));
-
-    app.get("/", (req, res) => {
-      res.send("API Working");
+    await connectDB(); // 🔥 MUST WAIT
+    app.listen(PORT, () => {
+      console.log(`✅ Server running on port ${PORT}`);
     });
-
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
-
   } catch (error) {
-    console.error("Server failed to start ❌");
+    console.error("❌ Server failed to start:", error.message);
     process.exit(1);
   }
 };
 
 startServer();
+
+export default app;
