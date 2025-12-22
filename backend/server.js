@@ -1,34 +1,48 @@
-import express from "express"
-import cors from "cors"
-import { connectDB } from "./config/db.js"
-import foodRouter from "./routes/foodRoute.js"
-import userRouter from "./routes/userRoute.js"
-import 'dotenv/config.js'
-import cartRouter from "./routes/cartRoute.js"
+import express from "express";
+import cors from "cors";
+import { connectDB } from "./config/db.js";
+import foodRouter from "./routes/foodRoute.js";
+import userRouter from "./routes/userRoute.js";
+import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
+import "dotenv/config.js";
 
-//app config
-const app = express()
-const port = process.env.PORT || 4000;
+const app = express();
+const port = process.env.PORT || 10000;
 
-//middleware
-app.use(express.json())
-app.use(cors());
+// middleware
+app.use(express.json());
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://food-app-piss.onrender.com"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
-//db connection
-connectDB();
+const startServer = async () => {
+  try {
+    await connectDB();
 
-// api.endpoints
-app.use("/api/food",foodRouter)
-app.use("/images",express.static('uploads'))
-app.use("/api/user", userRouter)
-app.use("/api/cart", cartRouter)
-app.use("/api/order", orderRouter);
+    app.use("/api/food", foodRouter);
+    app.use("/api/user", userRouter);
+    app.use("/api/cart", cartRouter);
+    app.use("/api/order", orderRouter);
+    app.use("/images", express.static("uploads"));
 
-app.get("/",(req,res)=>{
-    res.send("API Working")
-})
+    app.get("/", (req, res) => {
+      res.send("API Working");
+    });
 
-app.listen(port,()=>{
-    console.log(`Server Started on http://localhost:${port}`)
-})
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
+
+  } catch (error) {
+    console.error("Server failed to start ❌");
+    process.exit(1);
+  }
+};
+
+startServer();
