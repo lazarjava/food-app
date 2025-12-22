@@ -1,0 +1,36 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 4%;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo4 {
+    width: max(50%, 180px);
+    height: auto;
+    object-fit: contain;
+}
+
+.admin-text {
+    margin-top: 0px;
+    font-size: 15px;
+    font-weight: 600;
+    color:black;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.profile {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    padding-left: 10px;
+}
+
