@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 4%;
+    padding: 8px 4px;
 }
 
 .logo-container {
@@ -33,4 +33,3 @@
     object-fit: cover;
     padding-left: 10px;
 }
-

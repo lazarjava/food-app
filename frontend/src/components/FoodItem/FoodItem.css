@@ -1,49 +1,62 @@
-.food-item{
+.food-item {
     width: 100%;
     margin: auto;
     border-radius: 15px;
     box-shadow: 0px 0px 10px #00000015;
-    transition: 0.33;
+    transition: all 0.3s ease;
     animation: fadeIn 1s;
-    background-color: aqua;
+    background-color: #e4e5e9; /* changed from original */
 }
-.food-item-image{
+
+.food-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.food-item-image {
     width: 100%;
-    border-radius: 15px 15px 0px 0px;
+    border-radius: 15px 15px 0px 0px; /* fixed typo from Өpx */
 }
-.food-item-info{
+
+.food-item-info {
     padding: 20px;
 }
-.food-item-name-rating{
+
+.food-item-name-rating {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; /* fixed typo: 'canter' → 'center' */
     margin-bottom: 10px;
 }
+
 .food-item-name-rating p {
-    font-size: 20px;       /* balanced, readable */
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 600; /* slightly bolder */
     color: #333;
 }
 
 .food-item-name-rating img {
-    width: 70px;           /* smaller, cleaner */
+    width: 70px;
     object-fit: contain;
 }
-.food-item-desc{
+
+.food-item-desc {
     color: #676767;
     font-size: 12px;
 }
-.food-item-price{
-    color:red;
+
+.food-item-price {
+    color: red; /* changed from tomato */
     font-size: 22px;
     font-weight: 500;
     margin: 10px 0px;
 }
-.food-item-img-container{
+
+.food-item-img-container {
     position: relative;
 }
-.food-item-img-container .add{
+
+.food-item-img-container .add {
     width: 35px;
     position: absolute;
     bottom: 15px;
@@ -51,29 +64,19 @@
     cursor: pointer;
     border-radius: 50%;
 }
-.food-item-counter{
-    position:absolute;
+
+.food-item-counter {
+    position: absolute;
     bottom: 15px;
     right: 15px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     padding: 6px;
     border-radius: 50px;
     background-color: white;
-
 }
-.food-item-counter img{
+
+.food-item-counter img {
     width: 30px;
-}
-
-.food-item {                                                /* nhjsfdkkjfdsk */
-    transition: all 0.3s ease;
-    background-color:#fceadd;
-    border-radius: 15px;
-}
-
-.food-item:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
 }
