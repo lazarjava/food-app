@@ -3,7 +3,7 @@ import './Navbar.css'
 import {assets} from '../../assets/assets'
 import joyful from '../../assets/joyful.gif';
 import {Link, useNavigate} from 'react-router-dom'
-import { StoreContext } from '../../Context/StoreContext'
+import { StoreContext } from '../../context/StoreContext'
 
 
 const Navbar = ({setShowLogin}) => {
